@@ -19,4 +19,3 @@ routingServers:
     car:
       host: 'osrm-backend-834z.onrender.com'
       port: '443'
-      https: true
