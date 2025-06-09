@@ -1,17 +1,25 @@
-FROM node:18
+FROM debian:bullseye
 
-# VROOM installieren
+# Install basic tools
 RUN apt-get update && \
-    apt-get install -y curl gnupg && \
-    curl -s https://packagecloud.io/install/repositories/vroom/vroom/script.deb.sh | bash && \
+    apt-get install -y curl gnupg build-essential nodejs npm
+
+# Install vroom from official packagecloud
+RUN curl -s https://packagecloud.io/install/repositories/vroom/vroom/script.deb.sh | bash && \
     apt-get install -y vroom
 
-# Arbeitsverzeichnis setzen
+# Create app directory
 WORKDIR /vroom-express
 
-# Projektdateien kopieren und installieren
+# Copy project files
 COPY . .
+
+# Install Node dependencies
 RUN npm install
 
+# Expose the port
 EXPOSE 3000
+
+# Start the app
 CMD ["npm", "start"]
+
